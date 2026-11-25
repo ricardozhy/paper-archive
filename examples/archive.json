@@ -11,27 +11,49 @@
       "publicationYear": "2025",
       "journal": "示例学术期刊",
       "status": "已发表",
+      "jcr": "Q2",
+      "cas": "3区",
+      "zoneYear": "2025",
       "volume": "1",
       "issue": "2",
       "pages": "10–19",
+      "publicationDate": "2025-06-17",
+      "paperUrl": "https://example.org/",
+      "abstract": "用同一批跨学科文献比较两套标注规范，考察标注指南更新前后的分类一致性。",
       "evidence": "虚构示例，用于演示已发表状态和引用格式。"
     },
     {
       "id": "example-accepted",
       "title": "公共书目数据的版本校对（演示）",
+      "authors": "示例作者乙; 示例作者丙",
       "kind": "会议论文",
       "year": "2026",
       "journal": "示例数字人文研讨会",
       "status": "已录用",
-      "evidence": "虚构示例，用于演示录用状态。"
+      "evidence": "虚构录用通知，日期 2026-10-24。",
+      "attempts": [
+        {
+          "id": "example-accepted-attempt-1",
+          "journal": "示例数字人文研讨会",
+          "date": "2026-08-10",
+          "decisionDate": "2026-10-24",
+          "manuscriptId": "DEMO-CONF-017",
+          "status": "已录用"
+        }
+      ]
     },
     {
       "id": "example-under-review",
       "title": "社区档案的数字索引方法（演示）",
+      "authors": "示例作者甲; 示例作者丁",
       "kind": "期刊论文",
       "year": "2026",
       "journal": "示例信息学期刊",
       "status": "审稿中",
+      "jcr": "Q1",
+      "cas": "2区",
+      "zoneYear": "2025",
+      "abstract": "在一组社区档案中比较主题词和全文索引，记录不同查询方式对检索结果的影响。",
       "evidence": "虚构示例，用于演示在投状态和作者入口。",
       "attempts": [
         {
@@ -45,11 +67,37 @@
       ]
     },
     {
+      "id": "example-revision",
+      "title": "地方志图像目录的质量核验（演示）",
+      "authors": "示例作者乙; 示例作者丁",
+      "kind": "期刊论文",
+      "year": "2026",
+      "journal": "示例文化遗产期刊",
+      "status": "返修中",
+      "jcr": "Q3",
+      "cas": "4区",
+      "zoneYear": "2025",
+      "evidence": "虚构返修通知，日期 2026-11-06。",
+      "attempts": [
+        {
+          "id": "example-revision-attempt-1",
+          "journal": "示例文化遗产期刊",
+          "date": "2026-07-16",
+          "decisionDate": "2026-11-06",
+          "manuscriptId": "DEMO-2026-042",
+          "status": "返修中",
+          "submissionUrl": "https://example.org/",
+          "notes": "补充人工复核样本及图像目录的抽样方法。"
+        }
+      ]
+    },
+    {
       "id": "example-draft",
       "title": "手稿目录的一致性评价（演示）",
       "kind": "论文稿件",
       "year": "2026",
-      "status": "在写"
+      "status": "在写",
+      "notes": "已完成资料整理，正在撰写方法与结果。"
     },
     {
       "id": "example-transfer",
@@ -66,6 +114,64 @@
           "status": "已拒稿"
         }
       ]
+    },
+    {
+      "id": "example-resubmitted",
+      "title": "口述史资料的主题标引（演示）",
+      "kind": "期刊论文",
+      "year": "2026",
+      "journal": "示例口述史期刊",
+      "status": "转投中",
+      "attempts": [
+        {
+          "id": "example-resubmitted-attempt-1",
+          "journal": "示例档案学期刊",
+          "date": "2026-04-08",
+          "decisionDate": "2026-06-20",
+          "status": "已拒稿"
+        },
+        {
+          "id": "example-resubmitted-attempt-2",
+          "journal": "示例口述史期刊",
+          "date": "2026-09-04",
+          "manuscriptId": "DEMO-2026-061",
+          "status": "审稿中",
+          "submissionUrl": "https://example.org/",
+          "notes": "转投时补充访谈材料的编码说明。"
+        }
+      ]
+    },
+    {
+      "id": "example-research",
+      "title": "跨馆书目记录的近似匹配（演示）",
+      "kind": "研究方案",
+      "year": "2025",
+      "status": "在研",
+      "abstract": "拟比较规则匹配与向量匹配在异名作者和旧版书名上的表现。"
+    },
+    {
+      "id": "example-earlier-publication",
+      "title": "公开展览图录的元数据完整性调查（演示）",
+      "authors": "示例作者丙; 示例作者丁",
+      "kind": "期刊论文",
+      "year": "2024",
+      "publicationYear": "2024",
+      "publicationDate": "2024-11-09",
+      "journal": "示例博物馆研究期刊",
+      "status": "已发表",
+      "jcr": "Q4",
+      "cas": "4区",
+      "zoneYear": "2024",
+      "volume": "3",
+      "issue": "4",
+      "pages": "27–35"
+    },
+    {
+      "id": "example-pending",
+      "title": "旧城地图的地名对照整理（演示）",
+      "kind": "论文稿件",
+      "status": "待确认",
+      "evidence": "虚构案例。目录中只有一份初稿，尚无投稿或录用记录。"
     }
   ]
 }

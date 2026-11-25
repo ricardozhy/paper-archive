@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "vite build --config local/vite.config.mjs",
+    "build:demo": "vite build --mode demo --config local/vite.config.mjs",
     "start": "node --disable-warning=ExperimentalWarning local/server.mjs",
     "typecheck": "tsc --noEmit",
     "archive:import": "node --disable-warning=ExperimentalWarning local/import.mjs",

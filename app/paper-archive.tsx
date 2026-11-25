@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Archive, ArrowDownToLine, ArrowRight, ArrowUpFromLine, ChevronDown, FileText, FolderOpen, Plus, Search, X } from "lucide-react";
+import { Archive, ArrowDownToLine, ArrowRight, ArrowUpFromLine, ChevronDown, ExternalLink, FileText, FolderOpen, Plus, Search, X } from "lucide-react";
 
 import { ArchiveDetail, ArchiveEditor, StatusBadge, SubmissionLink } from "./archive-dialogs";
 import { currentSubmissionUrl, emptyPaper, isInSubmission, normalize, stageOf, tabs } from "./archive-data";
@@ -9,6 +9,7 @@ import type { Paper, Stage } from "./archive-data";
 
 type Backup = { format: "paper-archive"; version: 1; exportedAt?: string; papers: Paper[] };
 type ApiResponse = { papers?: unknown[]; error?: string; added?: number; skipped?: number };
+type ArchiveProps = { local?: boolean; demo?: { papers: unknown[]; repositoryUrl: string } };
 const dateSort = new Intl.Collator("zh-CN", { numeric: true });
 const stageOrder = tabs.slice(1).map(([key]) => key);
 
@@ -26,9 +27,9 @@ async function request(path: string, method = "GET", body?: Paper | Backup | { i
 const unwrap = (items: unknown[] = []) => items.map(normalize).filter((paper): paper is Paper => !!paper);
 const errorMessage = (error: unknown) => error instanceof Error ? error.message : "操作未完成，请重试。";
 
-export default function PaperArchive({ local = false }: { local?: boolean }) {
-  const [papers, setPapers] = useState<Paper[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function PaperArchive({ local = false, demo }: ArchiveProps) {
+  const [papers, setPapers] = useState(() => unwrap(demo?.papers));
+  const [loading, setLoading] = useState(!demo);
   const [loadError, setLoadError] = useState("");
   const [reload, setReload] = useState(0);
   const [stage, setStage] = useState<Stage>("all");
@@ -42,6 +43,7 @@ export default function PaperArchive({ local = false }: { local?: boolean }) {
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
+    if (demo) return;
     const controller = new AbortController();
     request("/api/papers", "GET", undefined, controller.signal).then((data) => {
       if (!controller.signal.aborted) setPapers(unwrap(data.papers));
@@ -51,7 +53,7 @@ export default function PaperArchive({ local = false }: { local?: boolean }) {
       if (!controller.signal.aborted) setLoading(false);
     });
     return () => controller.abort();
-  }, [reload]);
+  }, [demo, reload]);
 
   useEffect(() => () => { if (toastTimer.current) clearTimeout(toastTimer.current); }, []);
 
@@ -231,21 +233,30 @@ export default function PaperArchive({ local = false }: { local?: boolean }) {
           <div className="brand">
             <span className="brand-mark"><Archive size={18} /></span>
             <span>稿件档案</span>
-            {local && <span className="local-mark"><i /> 本地版</span>}
+            {demo ? <span className="local-mark">在线演示</span> : local && <span className="local-mark"><i /> 本地版</span>}
           </div>
-          <div className="top-actions">
-            <input ref={fileInput} hidden type="file" accept=".json,application/json" onChange={(event) => importData(event.target.files?.[0])} />
-            <button className="button text-button" disabled={disabled} onClick={() => fileInput.current?.click()}><ArrowUpFromLine size={16} /> 导入</button>
-            <button className="button text-button" disabled={disabled} onClick={exportData}><ArrowDownToLine size={16} /> 导出备份</button>
-          </div>
+          {demo ? (
+            <a className="button secondary-button" href={demo.repositoryUrl + "#readme"}>GitHub 使用说明 <ExternalLink size={14} /></a>
+          ) : (
+            <div className="top-actions">
+              <input ref={fileInput} hidden type="file" accept=".json,application/json" onChange={(event) => importData(event.target.files?.[0])} />
+              <button className="button text-button" disabled={disabled} onClick={() => fileInput.current?.click()}><ArrowUpFromLine size={16} /> 导入</button>
+              <button className="button text-button" disabled={disabled} onClick={exportData}><ArrowDownToLine size={16} /> 导出备份</button>
+            </div>
+          )}
         </div>
       </header>
       <main className="archive-main">
         <div className="page-heading">
           <div>
             <h1>我的论文</h1>
+            {demo && <p>论文、期刊、分区和投稿记录均为虚构示例。</p>}
           </div>
-          <button className="button primary-button" disabled={disabled} onClick={() => beginEdit(emptyPaper())}><Plus size={19} /> 添加论文</button>
+          {demo ? (
+            <a className="button primary-button" href={demo.repositoryUrl + "/generate"}>使用此模板 <ArrowRight size={16} /></a>
+          ) : (
+            <button className="button primary-button" disabled={disabled} onClick={() => beginEdit(emptyPaper())}><Plus size={19} /> 添加论文</button>
+          )}
         </div>
         <nav className="stage-nav" aria-label="论文分类">
           {tabs.map(([key, label]) => (
@@ -280,7 +291,7 @@ export default function PaperArchive({ local = false }: { local?: boolean }) {
             {!loading && loadError && <button className="button secondary-button" onClick={reloadData}>重新读取</button>}
             {!loading && !loadError && (papers.length
               ? <button className="button secondary-button" onClick={changeFilters}>清除筛选</button>
-              : <button className="button primary-button" onClick={() => beginEdit(emptyPaper())}><Plus size={17} /> 添加论文</button>)}
+              : !demo && <button className="button primary-button" onClick={() => beginEdit(emptyPaper())}><Plus size={17} /> 添加论文</button>)}
             {!local && loadError && <a className="plain-link" href="/signin-with-chatgpt?return_to=%2F" target="_top">登录</a>}
           </div>
         ) : (
@@ -305,7 +316,7 @@ export default function PaperArchive({ local = false }: { local?: boolean }) {
                         <div className="status-stack">
                           <StatusBadge status={paper.status} />
                           {isInSubmission(paper.status) && (
-                            <SubmissionStatusLink paper={paper} onEdit={() => beginEdit(paper)} />
+                            <SubmissionStatusLink paper={paper} onEdit={demo ? undefined : () => beginEdit(paper)} />
                           )}
                         </div>
                       </td>
@@ -334,15 +345,24 @@ export default function PaperArchive({ local = false }: { local?: boolean }) {
           </div>
         )}
       </main>
-      {detail && <ArchiveDetail key={detail.id} paper={detail} local={local} busy={busy} onClose={() => setDetailId("")} onEdit={() => beginEdit(detail)} onRemove={() => removePaper(detail)} onFolder={() => openFolder(detail)} copy={copy} toast={toast} />}
+      {detail && (
+        <ArchiveDetail
+          key={detail.id} paper={detail} local={local} busy={busy} toast={toast}
+          onClose={() => setDetailId("")}
+          onEdit={demo ? undefined : () => beginEdit(detail)}
+          onRemove={demo ? undefined : () => removePaper(detail)}
+          onFolder={() => openFolder(detail)}
+          copy={copy}
+        />
+      )}
       {editor && <ArchiveEditor key={editor.id} paper={editor} local={local} isNew={!papers.some((paper) => paper.id === editor.id)} busy={busy} onClose={() => setEditor(null)} onSave={savePaper} toast={toast} />}
       {!detail && !editor && toast && <div className="toast" role="status">{toast}</div>}
     </div>
   );
 }
 
-function SubmissionStatusLink({ paper, onEdit }: { paper: Paper; onEdit: () => void }) {
+function SubmissionStatusLink({ paper, onEdit }: { paper: Paper; onEdit?: () => void }) {
   const href = currentSubmissionUrl(paper);
   if (href) return <SubmissionLink href={href} />;
-  return <button type="button" className="submission-link submission-missing" onClick={onEdit}>补投稿链接</button>;
+  return onEdit ? <button type="button" className="submission-link submission-missing" onClick={onEdit}>补投稿链接</button> : null;
 }

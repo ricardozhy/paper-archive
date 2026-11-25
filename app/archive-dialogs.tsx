@@ -211,7 +211,7 @@ export function ArchiveEditor({ paper, local, isNew, busy, toast, onClose, onSav
 
 type DetailProps = {
   paper: Paper; local: boolean; busy: boolean; toast: string;
-  onClose: () => void; onEdit: () => void; onRemove: () => void; onFolder: () => void;
+  onClose: () => void; onEdit?: () => void; onRemove?: () => void; onFolder: () => void;
   copy: (text: string, message: string) => void;
 };
 
@@ -335,9 +335,13 @@ export function ArchiveDetail({ paper, local, busy, toast, onClose, onEdit, onRe
         {paper.notes && <section className="detail-section"><h4>备注</h4><p className="detail-text">{paper.notes}</p></section>}
       </div>
       <footer className="dialog-footer">
-        <button className="button delete-button" onClick={onRemove} disabled={busy}><Trash2 size={15} /> 删除记录</button>
+        {onRemove && <button className="button delete-button" onClick={onRemove} disabled={busy}><Trash2 size={15} /> 删除记录</button>}
         <p className="dialog-status" role="status">{toast}</p>
-        <button className="button primary-button" onClick={onEdit} disabled={busy}><Pencil size={15} /> 编辑论文</button>
+        {onEdit ? (
+          <button className="button primary-button" onClick={onEdit} disabled={busy}><Pencil size={15} /> 编辑论文</button>
+        ) : (
+          <button className="button secondary-button" onClick={onClose}>返回列表</button>
+        )}
       </footer>
     </Dialog>
   );

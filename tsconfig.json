@@ -4,10 +4,11 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
     "jsx": "react-jsx",
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true
   },
-  "include": ["app/**/*.tsx", "app/**/*.ts", "local/main.tsx"]
+  "include": ["app/**/*.tsx", "app/**/*.ts", "local/main.tsx", "demo/main.tsx"]
 }
