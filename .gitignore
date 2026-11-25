@@ -1,0 +1,16 @@
+/node_modules/
+/dist-local/
+/.local-data/
+/.claude/settings.local.json
+CLAUDE.local.md
+AGENTS.local.md
+.env*
+*.bak
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+*.tsbuildinfo
+稿件档案-*.json
+.DS_Store
+Thumbs.db

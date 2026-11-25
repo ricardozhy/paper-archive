@@ -1,0 +1,71 @@
+{
+  "format": "paper-archive",
+  "version": 1,
+  "papers": [
+    {
+      "id": "example-published",
+      "title": "跨学科文献标注的可复现评估（演示）",
+      "authors": "示例作者甲; 示例作者乙",
+      "kind": "期刊论文",
+      "year": "2025",
+      "publicationYear": "2025",
+      "journal": "示例学术期刊",
+      "status": "已发表",
+      "volume": "1",
+      "issue": "2",
+      "pages": "10–19",
+      "evidence": "虚构示例，用于演示已发表状态和引用格式。"
+    },
+    {
+      "id": "example-accepted",
+      "title": "公共书目数据的版本校对（演示）",
+      "kind": "会议论文",
+      "year": "2026",
+      "journal": "示例数字人文研讨会",
+      "status": "已录用",
+      "evidence": "虚构示例，用于演示录用状态。"
+    },
+    {
+      "id": "example-under-review",
+      "title": "社区档案的数字索引方法（演示）",
+      "kind": "期刊论文",
+      "year": "2026",
+      "journal": "示例信息学期刊",
+      "status": "审稿中",
+      "evidence": "虚构示例，用于演示在投状态和作者入口。",
+      "attempts": [
+        {
+          "id": "example-under-review-attempt-1",
+          "journal": "示例信息学期刊",
+          "date": "2026-03-10",
+          "manuscriptId": "DEMO-0001",
+          "status": "审稿中",
+          "submissionUrl": "https://example.org/"
+        }
+      ]
+    },
+    {
+      "id": "example-draft",
+      "title": "手稿目录的一致性评价（演示）",
+      "kind": "论文稿件",
+      "year": "2026",
+      "status": "在写"
+    },
+    {
+      "id": "example-transfer",
+      "title": "图书馆开放数据的复用研究（演示）",
+      "kind": "期刊论文",
+      "year": "2026",
+      "status": "待转投",
+      "attempts": [
+        {
+          "id": "example-transfer-attempt-1",
+          "journal": "示例学术期刊",
+          "date": "2026-02-10",
+          "decisionDate": "2026-04-21",
+          "status": "已拒稿"
+        }
+      ]
+    }
+  ]
+}
