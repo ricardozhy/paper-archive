@@ -2,6 +2,10 @@
 
 在本机整理在写、在投、返修、转投、录用和发表的论文。网页按状态和年份筛选，保留每轮投稿的期刊、稿号与作者入口，并把原稿、返修材料和录用通知链接到原来的文件夹。可以用这个模板建立自己的档案，并按需修改网页。
 
+## 在线演示
+
+无需安装。只读演示使用 10 条虚构论文，可以按年份和状态筛选，查看期刊分区、投稿与转投记录，切换引用格式。**[打开在线演示](https://ricardozhy.github.io/paper-archive/)**
+
 ## 交给 Codex 或 Claude Code 整理
 
 1. [使用此模板](https://github.com/ricardozhy/paper-archive/generate)创建自己的仓库，或克隆本仓库。
@@ -30,7 +34,7 @@ npm start
 
 默认端口是 4317。如果同一台机器已有另一份档案，先在启动终端设置 `PAPER_ARCHIVE_PORT`（PowerShell 用 `$env:PAPER_ARCHIVE_PORT = '4318'`，bash 用 `export PAPER_ARCHIVE_PORT=4318`），再启动并打开对应端口。
 
-如果只想先试用，在网页点击「导入」并选择 [虚构演示档案](examples/archive.json)。
+要在本机试用导入，在网页点击「导入」并选择 [虚构演示档案](examples/archive.json)。
 
 ## 批量导入和备份
 
